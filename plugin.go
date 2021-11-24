@@ -44,9 +44,12 @@ func (plugin *Plugin) Exec(message Message) error {
 		return err
 	}
 	content := plugin.regexp(message.Content)
+	if plugin.Debug {
+		log.Printf("regexp content:" + content)
+	}
 	switch strings.ToLower(message.MessageType) {
 	case "markdown":
-		err = notice.SendMarkdown(message.Title, message.Content, message.AtAll, message.AtMobiles)
+		err = notice.SendMarkdown(message.Title, content, message.AtAll, message.AtMobiles)
 	case "text":
 		err = notice.SendText(content, message.AtAll, message.AtMobiles)
 	default:
@@ -66,12 +69,21 @@ func (plugin *Plugin) regexp(content string) string {
 	reg := regexp.MustCompile(`\[([^\[\]]*)]`)
 	match := reg.FindAllStringSubmatch(content, -1)
 	for _, m := range match {
+		if plugin.Debug {
+			log.Printf("env str: %s = ", m[0])
+		}
 		// from environment
 		if envStr := os.Getenv(m[1]); envStr != "" {
+			if plugin.Debug {
+				log.Printf(" %s\n", envStr)
+			}
 			content = strings.ReplaceAll(content, m[0], envStr)
 		}
 		// check if the keyword is legal
 		if _, ok := envs[m[1]]; ok {
+			if plugin.Debug {
+				log.Printf(" %s\n", envs[m[1]])
+			}
 			// replace keyword
 			content = strings.ReplaceAll(content, m[0], envs[m[1]])
 		}
