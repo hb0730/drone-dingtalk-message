@@ -3,28 +3,29 @@
 ## example
 
 ```yaml
-- name: Notice Success
-    pull: if-not-exists
-    image: hb0730/drone-plugin-notice
-    settings:
-      debug: true
-      notice_access_token:
-        from_secret: feishu-robot-webhok
-      notice_secret:
-        from_secret: feishu-robot-secret
-      notice_type: feishu
-      message_type: markdown
-      message_at_all: true
-      message_title: Drone 构建通知
-      message_content: |
-        ### 构建信息
-        > - 应用名称: [DRONE_REPO_NAME]
-        > - 构建结果: 预发布成功 ✅
-        > - 构建发起: [CI_COMMIT_AUTHOR_NAME]
-        > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
-        构建日志: [点击查看详情]([DRONE_BUILD_LINK])        
-    when:
-      status: success
+- name: Dingtalk Notice Failure
+  pull: if-not-exists
+  image: hb0730/drone-plugin-notice:0.0.3-beta
+  settings:
+    debug: true
+    notice_access_token:
+      from_secret: feishu-robot-webhok
+    notice_secret:
+      from_secret: feishu-robot-secret
+    notice_type: feishu
+    message_type: markdown
+    message_at_all: true
+    message_title: Drone 构建通知
+    message_content: |
+      ### 构建信息
+      > - 应用名称: [DRONE_REPO_NAME]
+      > - 构建结果: 预发布成功 ✅
+      > - 构建发起: [CI_COMMIT_AUTHOR_NAME]
+      > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
+      
+      构建日志: [点击查看详情]([DRONE_BUILD_LINK])        
+  when:
+    status: success
 ```
 
 ## 插件参数 plugin params
