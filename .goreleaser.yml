@@ -39,8 +39,8 @@ dockers:
     ids:
       - drone-plugin-notice
     image_templates:
-      - "hb0730/drone-plugin-notice/latest"
-      - "hb0730/drone-plugin-notice/{{.Tag}}"
+      - "hb0730/drone-plugin-notice:latest"
+      - "hb0730/drone-plugin-notice:{{.Tag}}"
     skip_push: false
     dockerfile: ./Dockerfile
 archives:
