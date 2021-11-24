@@ -95,7 +95,7 @@ func (plugin *Plugin) regexp(content string) string {
 
 func (plugin *Plugin) getEnvs() map[string]string {
 	envs := map[string]string{}
-	//CUSTOM_BUILD_TIME
+	//CUSTOM_BUILD_CONSUMING
 	finishedEnv := os.Getenv("DRONE_BUILD_FINISHED")
 	createdEnv := os.Getenv("DRONE_BUILD_CREATED")
 	var consuming uint64

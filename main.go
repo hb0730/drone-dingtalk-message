@@ -67,7 +67,7 @@ func main() {
 		},
 		cli.StringFlag{
 			Name:   "config.message.content",
-			Usage:  "message content(Support placeholder[[]])",
+			Usage:  "message content(Support placeholder[])",
 			EnvVar: "PLUGIN_MESSAGE_CONTENT",
 		},
 	}

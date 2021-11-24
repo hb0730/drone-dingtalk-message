@@ -22,7 +22,7 @@
       > - 构建结果: 预发布成功 ✅
       > - 构建发起: [CI_COMMIT_AUTHOR_NAME]
       > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
-      
+
       构建日志: [点击查看详情]([DRONE_BUILD_LINK])        
   when:
     status: success
@@ -35,7 +35,11 @@
 * `message_type` (required) : 消息类型: `text`,`markdown`
 * `notice_secret` : 如果设置了`加签` , 可以把你的加签密钥填入此项完成加签操作。
 * `message_at_all` : 是否`At`所有人
-* `message_at_mobiles` : 你需要@的群成员的手机号，多个时用英文逗号(`,`)分隔 , 目前只支持 `dingtalk` 
+* `message_at_mobiles` : 你需要@的群成员的手机号，多个时用英文逗号(`,`)分隔 , 目前只支持 `dingtalk`
 * `message_title` : 标题,只支持`markdown`
 * `message_content` : 内容,支持占位符`[]` 替换，支持当前所有环境变量
 * `debug` : debug模式，打印`env`等信息
+
+---
+
+* `CUSTOM_BUILD_CONSUMING` : 构建时间(秒)
