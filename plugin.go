@@ -2,9 +2,11 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -93,12 +95,17 @@ func (plugin *Plugin) regexp(content string) string {
 
 func (plugin *Plugin) getEnvs() map[string]string {
 	envs := map[string]string{}
-	for _, env := range os.Environ() {
-		parts := strings.SplitN(env, "=", 2)
-		if len(parts) != 2 {
-			continue
-		}
-		envs[parts[0]] = parts[1]
+	//CUSTOM_BUILD_TIME
+	finished := os.Getenv("DRONE_BUILD_FINISHED")
+	started := os.Getenv("DRONE_BUILD_STARTED")
+	var consuming uint64
+	if finished != "" && started != "" {
+		finishedAt, _ := strconv.ParseUint(os.Getenv(finished), 10, 64)
+		startedAt, _ := strconv.ParseUint(os.Getenv(started), 10, 64)
+		consuming = finishedAt - startedAt
+	} else {
+		consuming = 0
 	}
+	envs["CUSTOM_BUILD_CONSUMING"] = fmt.Sprintf("%v", consuming)
 	return envs
 }
