@@ -96,13 +96,13 @@ func (plugin *Plugin) regexp(content string) string {
 func (plugin *Plugin) getEnvs() map[string]string {
 	envs := map[string]string{}
 	//CUSTOM_BUILD_TIME
-	finished := os.Getenv("DRONE_BUILD_FINISHED")
-	started := os.Getenv("DRONE_BUILD_STARTED")
+	finishedEnv := os.Getenv("DRONE_BUILD_FINISHED")
+	createdEnv := os.Getenv("DRONE_BUILD_CREATED")
 	var consuming uint64
-	if finished != "" && started != "" {
-		finishedAt, _ := strconv.ParseUint(os.Getenv(finished), 10, 64)
-		startedAt, _ := strconv.ParseUint(os.Getenv(started), 10, 64)
-		consuming = finishedAt - startedAt
+	if finishedEnv != "" && createdEnv != "" {
+		finishedAt, _ := strconv.ParseUint(os.Getenv(finishedEnv), 10, 64)
+		createdAt, _ := strconv.ParseUint(os.Getenv(createdEnv), 10, 64)
+		consuming = finishedAt - createdAt
 	} else {
 		consuming = 0
 	}
