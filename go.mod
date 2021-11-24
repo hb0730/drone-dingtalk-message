@@ -1,4 +1,4 @@
-module github.com/hb0730/drone-dingtalk-message
+module github.com/hb0730/drone-plugin-notice
 
 go 1.12
 
