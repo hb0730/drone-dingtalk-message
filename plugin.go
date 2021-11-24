@@ -2,17 +2,18 @@ package main
 
 import (
 	"errors"
-	"github.com/CatchZeng/dingtalk"
 	"log"
 	"os"
+	"regexp"
+	"strings"
 )
 
 type Plugin struct {
-	Debug          bool
-	DingTalkConfig DingTalkConfig
-	client         *dingtalk.Client
+	Debug        bool
+	NoticeConfig NoticeConfig
 }
-type DingTalkConfig struct {
+type NoticeConfig struct {
+	NoticeType  string
 	AccessToken string
 	Secret      string
 }
@@ -26,43 +27,66 @@ type Message struct {
 }
 
 func (plugin *Plugin) Exec(message Message) error {
+	var err error
 	if plugin.Debug {
 		for _, e := range os.Environ() {
 			log.Println(e)
 		}
 	}
-	if plugin.DingTalkConfig.AccessToken == "" {
-		return errors.New("missing DingTalk access token")
+	if plugin.NoticeConfig.AccessToken == "" {
+		return errors.New("missing  access token")
 	}
 	if message.Content == "" {
 		return errors.New("missing Content")
-
 	}
-	//create dingtalk client
-	plugin.client = dingtalk.NewClient(plugin.DingTalkConfig.AccessToken, plugin.DingTalkConfig.Secret)
-
-	switch message.MessageType {
-	case string(dingtalk.MsgTypeText):
-		return plugin.SendText(message.Content, message.AtMobiles, message.AtAll)
-	case string(dingtalk.MsgTypeMarkdown):
-		return plugin.SendMarkdown(message.Title, message.Content, message.AtMobiles, message.AtAll)
+	notice, err := getSupportMessage(plugin.NoticeConfig.NoticeType, plugin.NoticeConfig.AccessToken, plugin.NoticeConfig.Secret)
+	if err != nil {
+		return err
+	}
+	content := plugin.regexp(message.Content)
+	switch strings.ToLower(message.MessageType) {
+	case "markdown":
+		err = notice.SendMarkdown(message.Title, message.Content, message.AtAll, message.AtMobiles)
+	case "text":
+		err = notice.SendText(content, message.AtAll, message.AtMobiles)
 	default:
-		return errors.New("not support message type")
+
+		msg := "not support message type"
+		err = errors.New(msg)
 	}
-
-}
-func (plugin *Plugin) SendMarkdown(title string, content string, atMobiles []string, atAll bool) error {
-	message := dingtalk.NewMarkdownMessage().SetMarkdown(title, content).SetAt(atMobiles, atAll)
-	_, err := plugin.client.Send(message)
+	if err == nil {
+		log.Println("send message success!")
+	}
 	return err
 }
-func (plugin *Plugin) SendText(content string, atMobiles []string, atAll bool) error {
-	message := dingtalk.NewTextMessage().
-		SetContent(content).SetAt(
-		atMobiles,
-		atAll,
-	)
-	_, err := plugin.client.Send(message)
 
-	return err
+func (plugin *Plugin) regexp(content string) string {
+	envs := plugin.getEnvs()
+	// replace regex
+	reg := regexp.MustCompile(`\[([^\[\]]*)]`)
+	match := reg.FindAllStringSubmatch(content, -1)
+	for _, m := range match {
+		// from environment
+		if envStr := os.Getenv(m[1]); envStr != "" {
+			content = strings.ReplaceAll(content, m[0], envStr)
+		}
+		// check if the keyword is legal
+		if _, ok := envs[m[1]]; ok {
+			// replace keyword
+			content = strings.ReplaceAll(content, m[0], envs[m[1]])
+		}
+	}
+	return content
+}
+
+func (plugin *Plugin) getEnvs() map[string]string {
+	envs := map[string]string{}
+	for _, env := range os.Environ() {
+		parts := strings.SplitN(env, "=", 2)
+		if len(parts) != 2 {
+			continue
+		}
+		envs[parts[0]] = parts[1]
+	}
+	return envs
 }

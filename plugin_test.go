@@ -6,7 +6,7 @@ import (
 
 func TestPlugin_Exec(t *testing.T) {
 	plugin := &Plugin{
-		DingTalkConfig: DingTalkConfig{
+		NoticeConfig: NoticeConfig{
 			AccessToken: "",
 			Secret:      "",
 		},

@@ -13,8 +13,8 @@ var version = "unknown"
 func main() {
 
 	app := cli.NewApp()
-	app.Name = "dingtalk-robot plugin"
-	app.Usage = "Sending message to DingTalk group by robot using WebHook"
+	app.Name = "drone-plugin-notice"
+	app.Usage = "Sending message to DingTalk/FeiShu group by robot using WebHook"
 	app.Version = version
 	app.Action = run
 	app.Copyright = "© 2021-now hb0730"
@@ -31,39 +31,44 @@ func main() {
 			EnvVar: "PLUGIN_DEBUG",
 		},
 		cli.StringFlag{
-			Name:   "config.dingtalk.token,access_token,token",
-			Usage:  "DingTalk webhook access token",
-			EnvVar: "PLUGIN_ACCESS_TOKEN,PLUGIN_TOKEN",
+			Name:   "config.notice.access_token",
+			Usage:  "DingTalk webhok access token/FeiShu webhok",
+			EnvVar: "PLUGIN_NOTICE_ACCESS_TOKEN,PLUGIN_ACCESS_TOKEN",
 		},
 		cli.StringFlag{
-			Name:   "config.dingtalk.secret,secret",
-			Usage:  "DingTalk webhok secret",
-			EnvVar: "PLUGIN_SECRET",
+			Name:   "config.notice.secret",
+			Usage:  "DingTalk/FeiShu WebHook secret for generate sign",
+			EnvVar: "PLUGIN_NOTICE_SECRET,PLUGIN_SECRET",
+		},
+		cli.StringFlag{
+			Name:   "config.notice.type",
+			Usage:  "Robot type:feishu,dingtalk",
+			EnvVar: "PLUGIN_NOTICE_TYPE",
+		},
+		cli.StringFlag{
+			Name:   "config.message.type",
+			Usage:  "Robot message type: text,markdown",
+			EnvVar: "PLUGIN_MESSAGE_TYPE",
 		},
 		cli.BoolFlag{
-			Name:   "config.message.at_all,at_all,atAll",
+			Name:   "config.message.at_all",
 			Usage:  "at all in a message",
-			EnvVar: "PLUGIN_AT_ALL",
+			EnvVar: "PLUGIN_MESSAGE_AT_ALL,PLUGIN_MESSAGE_ATALL",
 		},
 		cli.StringFlag{
-			Name:   "config.message.at_mobiles,at_mobiles",
-			Usage:  "at someone in a DingTalk group need this guy bind's mobile",
-			EnvVar: "PLUGIN_AT_MOBILES",
+			Name:   "config.message.at.mobiles",
+			Usage:  "at someone in a DingTalk group need this guy bind's mobile(FeiShu unsupported)",
+			EnvVar: "PLUGIN_MESSAGE_AT_MOBILES",
 		},
 		cli.StringFlag{
-			Name:   "config.message.title,message_title",
-			Usage:  "",
-			EnvVar: "PLUGINS_MESSAGE_TITLE",
+			Name:   "config.message.title",
+			Usage:  "message title(markdown supported)",
+			EnvVar: "PLUGIN_MESSAGE_TITLE",
 		},
 		cli.StringFlag{
 			Name:   "config.message.content",
-			Usage:  "",
-			EnvVar: "PLUGIN_CONTENT",
-		},
-		cli.StringFlag{
-			Name:   "config.message.message_type,message_type",
-			Usage:  "DingTalk message type:text, markdown",
-			EnvVar: "PLUGIN_MESSAGE_TYPE",
+			Usage:  "message content(Support placeholder[[]])",
+			EnvVar: "PLUGIN_MESSAGE_CONTENT",
 		},
 	}
 	if _, err := os.Stat("/run/drone/env"); err == nil {
@@ -78,15 +83,16 @@ func main() {
 func run(ctx *cli.Context) error {
 	plugin := &Plugin{
 		Debug: ctx.Bool("config.debug"),
-		DingTalkConfig: DingTalkConfig{
-			AccessToken: ctx.String("config.dingtalk.token"),
-			Secret:      ctx.String("config.dingtalk.secret"),
+		NoticeConfig: NoticeConfig{
+			NoticeType:  ctx.String("config.notice.type"),
+			AccessToken: ctx.String("config.notice.access_token"),
+			Secret:      ctx.String("config.notice.secret"),
 		},
 	}
 	message := Message{
 		AtAll:       ctx.Bool("config.message.at_all"),
-		AtMobiles:   strings.Split(ctx.String("config.message.at_mobiles"), ","),
-		MessageType: ctx.String("config.message.message_type"),
+		AtMobiles:   strings.Split(ctx.String("config.message.at.mobiles"), ","),
+		MessageType: ctx.String("config.message.type"),
 		Title:       ctx.String("config.message.title"),
 		Content:     ctx.String("config.message.content"),
 	}

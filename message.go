@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/CatchZeng/dingtalk"
 	"github.com/hb0730/feishu-robot"
+	"strings"
 )
 
 type IMessage interface {
@@ -12,7 +13,7 @@ type IMessage interface {
 }
 
 func getSupportMessage(typeStr, accessToken, secret string) (IMessage, error) {
-	switch typeStr {
+	switch strings.ToLower(typeStr) {
 	case "dingtalk":
 		return NewDingTalkMessage(accessToken, secret), nil
 	case "feishu":
