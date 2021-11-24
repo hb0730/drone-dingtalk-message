@@ -53,7 +53,7 @@ func main() {
 		cli.StringFlag{
 			Name:   "config.message.title,message_title",
 			Usage:  "",
-			EnvVar: "PLUGINS_TITLE",
+			EnvVar: "PLUGINS_MESSAGE_TITLE",
 		},
 		cli.StringFlag{
 			Name:   "config.message.content",
