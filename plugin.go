@@ -97,12 +97,12 @@ func (plugin *Plugin) getEnvs() map[string]string {
 	envs := map[string]string{}
 	//CUSTOM_BUILD_CONSUMING
 	finishedEnv := os.Getenv("DRONE_BUILD_FINISHED")
-	createdEnv := os.Getenv("DRONE_BUILD_CREATED")
+	startedEnv := os.Getenv("DRONE_BUILD_STARTED")
 	var consuming uint64
-	if finishedEnv != "" && createdEnv != "" {
-		finishedAt, _ := strconv.ParseUint(os.Getenv(finishedEnv), 10, 64)
-		createdAt, _ := strconv.ParseUint(os.Getenv(createdEnv), 10, 64)
-		consuming = finishedAt - createdAt
+	if finishedEnv != "" && startedEnv != "" {
+		finishedAt, _ := strconv.ParseUint(finishedEnv, 10, 64)
+		startedAt, _ := strconv.ParseUint(startedEnv, 10, 64)
+		consuming = finishedAt - startedAt
 	} else {
 		consuming = 0
 	}
