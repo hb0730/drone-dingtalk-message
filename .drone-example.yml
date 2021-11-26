@@ -1,0 +1,26 @@
+kind: pipeline
+type: docker
+name: notice test
+trigger:
+  event:
+    - push
+  branch:
+    - main
+steps:
+  - name: notice
+    image: hb0730/drone-plugin-notice:1.0.0
+    settings:
+      notice_access_token:
+        from_secret: notice_webhok
+      notice_secret:
+        from_secret: notice_secret
+      notice_type: dingtalk
+      message_type: markdown
+      message_title: drone-plugin-notice 测试
+      debug: true
+      message_content: |
+        ### 构建信息
+        > - 应用名称: [DRONE_REPO_NAME]
+        > - 构建发起: [CI_COMMIT_AUTHOR_NAME]
+        > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
+        构建日志: [点击查看详情]([DRONE_BUILD_LINK])
