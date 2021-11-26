@@ -31,7 +31,7 @@ func TestPlugin_regexp(t *testing.T) {
         > - 构建发起: [CI_COMMIT_AUTHOR_NAME]
         > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
         构建日志: [点击查看详情]([DRONE_BUILD_LINK])`
-	plugin := &Plugin{Debug: true}
+	plugin := &Plugin{Debug: true, Custom: Custom{Consuming: Consuming{StartedEnv: "DRONE_BUILD_STARTED", FinishedEnv: "DRONE_BUILD_FINISHED"}}}
 	content = plugin.regexp(content)
 	t.Log(content)
 }

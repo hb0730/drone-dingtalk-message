@@ -13,11 +13,21 @@ import (
 type Plugin struct {
 	Debug        bool
 	NoticeConfig NoticeConfig
+	Custom       Custom
 }
 type NoticeConfig struct {
 	NoticeType  string
 	AccessToken string
 	Secret      string
+}
+type Custom struct {
+	Consuming Consuming
+}
+
+// Consuming custom consuming env
+type Consuming struct {
+	StartedEnv  string
+	FinishedEnv string
 }
 
 type Message struct {
@@ -96,12 +106,23 @@ func (plugin *Plugin) regexp(content string) string {
 func (plugin *Plugin) getEnvs() map[string]string {
 	envs := map[string]string{}
 	//CUSTOM_BUILD_CONSUMING
-	finishedEnv := os.Getenv("DRONE_BUILD_FINISHED")
-	startedEnv := os.Getenv("DRONE_BUILD_STARTED")
-	var consuming uint64
+	finishedEnv := plugin.Custom.Consuming.FinishedEnv
+	startedEnv := plugin.Custom.Consuming.StartedEnv
+	var finishedVar, startedVar string
+	var consuming, finishedAt, startedAt uint64
 	if finishedEnv != "" && startedEnv != "" {
-		finishedAt, _ := strconv.ParseUint(finishedEnv, 10, 64)
-		startedAt, _ := strconv.ParseUint(startedEnv, 10, 64)
+		finishedVar = os.Getenv(finishedEnv)
+		startedVar = os.Getenv(startedEnv)
+	} else {
+		finishedVar = os.Getenv("DRONE_BUILD_FINISHED")
+		startedVar = os.Getenv("DRONE_BUILD_STARTED")
+	}
+	if plugin.Debug {
+		log.Printf("BUILD_FINISHED: %s , BUILD_STARTED: %s \n", finishedVar, startedVar)
+	}
+	if finishedVar != "" && startedVar != "" {
+		finishedAt, _ = strconv.ParseUint(finishedVar, 10, 64)
+		startedAt, _ = strconv.ParseUint(startedVar, 10, 64)
 		consuming = finishedAt - startedAt
 	} else {
 		consuming = 0

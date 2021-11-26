@@ -103,10 +103,8 @@ github.com/hashicorp/logutils v1.0.0/go.mod h1:QIAnNjmIWmVIIkWDTG1z5v++HQmx9WQRO
 github.com/hashicorp/mdns v1.0.0/go.mod h1:tL+uN++7HEJ6SQLQ2/p+z2pH24WQKWjBPkE0mNTz8vQ=
 github.com/hashicorp/memberlist v0.1.3/go.mod h1:ajVTdAv/9Im8oMAAj5G31PhhMCZJV2pPBoIllUwCN7I=
 github.com/hashicorp/serf v0.8.2/go.mod h1:6hOLApaqBFA1NXqRQAsxw9QxuDEvNxSQRwA/JwenrHc=
-github.com/hb0730/feishu-robot v0.0.0-20211124003633-616a71135703 h1:Bpvg1EGIZTyiXqUPTfLpvpKSYT0Llnkrb7FGGsr3Ldo=
-github.com/hb0730/feishu-robot v0.0.0-20211124003633-616a71135703/go.mod h1:EN74cd0I9WrHqMwR4vT0aDeEUd1agq/Bf9Xryt4Md7s=
-github.com/hb0730/feishu-robot v0.0.0-20211124004859-008df39314fd h1:IB4Pd1jmkEop8r7wUBlXfcApYeTlM/Yh3K9/yPDBYtM=
-github.com/hb0730/feishu-robot v0.0.0-20211124004859-008df39314fd/go.mod h1:EN74cd0I9WrHqMwR4vT0aDeEUd1agq/Bf9Xryt4Md7s=
+github.com/hb0730/feishu-robot v1.0.0 h1:Iq608WVUiS6r0cXZyeW94goXao5yn5AM1ZA/PN4V0Yg=
+github.com/hb0730/feishu-robot v1.0.0/go.mod h1:EN74cd0I9WrHqMwR4vT0aDeEUd1agq/Bf9Xryt4Md7s=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
 github.com/joho/godotenv v1.4.0 h1:3l4+N6zfMWnkbPEXKng2o2/MR5mSwTrBih4ZEkkz1lg=
 github.com/joho/godotenv v1.4.0/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
@@ -231,7 +229,6 @@ golang.org/x/net v0.0.0-20190503192946-f4e77d36d62c/go.mod h1:t9HGtf8HONx5eT2rtn
 golang.org/x/net v0.0.0-20190522155817-f3200d17e092/go.mod h1:HSz+uSET+XFnRR8LxR5pz3Of3rY3CfYBVs4xY44aLks=
 golang.org/x/net v0.0.0-20190603091049-60506f45cf65/go.mod h1:HSz+uSET+XFnRR8LxR5pz3Of3rY3CfYBVs4xY44aLks=
 golang.org/x/net v0.0.0-20190620200207-3b0461eec859/go.mod h1:z5CRVTTTmAJ677TzLLGU+0bjPO0LkuOLi4/5GtJWs/s=
-golang.org/x/net v0.0.0-20211029224645-99673261e6eb h1:pirldcYWx7rx7kE5r+9WsOXPXK0+WH5+uZ7uPmJ44uM=
 golang.org/x/net v0.0.0-20211029224645-99673261e6eb/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20211123203042-d83791d6bcd9 h1:0qxwC5n+ttVOINCBeRHO0nq9X7uy8SDsPoi5OaCdIEI=
 golang.org/x/net v0.0.0-20211123203042-d83791d6bcd9/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=

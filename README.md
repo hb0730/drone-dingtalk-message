@@ -39,6 +39,8 @@
 * `message_title` : 标题,只支持`markdown`
 * `message_content` : 内容,支持占位符`[]` 替换，支持当前所有环境变量
 * `debug` : debug模式，打印`env`等信息
+* `custom_started` 开始时间环境变量,如:`DRONE_BUILD_STARTED`
+* `custom_finished` 完成时间环境变量,如:`DRONE_BUILD_FINISHED`
 
 ---
 

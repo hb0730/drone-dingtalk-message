@@ -70,6 +70,16 @@ func main() {
 			Usage:  "message content(Support placeholder[])",
 			EnvVar: "PLUGIN_MESSAGE_CONTENT",
 		},
+		cli.StringFlag{
+			Name:   "custom.started,started",
+			Usage:  "started custom env name, eg., BUILD_STARTED",
+			EnvVar: "PLUGIN_CUSTOM_STARTED",
+		},
+		cli.StringFlag{
+			Name:   "custom.finished,finished",
+			Usage:  "finished custom env name, eg., BUILD_FINISHED",
+			EnvVar: "PLUGIN_CUSTOM_FINISHED",
+		},
 	}
 	if _, err := os.Stat("/run/drone/env"); err == nil {
 		godotenv.Overload("/run/drone/env")
@@ -87,6 +97,12 @@ func run(ctx *cli.Context) error {
 			NoticeType:  ctx.String("config.notice.type"),
 			AccessToken: ctx.String("config.notice.access_token"),
 			Secret:      ctx.String("config.notice.secret"),
+		},
+		Custom: Custom{
+			Consuming: Consuming{
+				StartedEnv:  ctx.String("custom.started"),
+				FinishedEnv: ctx.String("custom.finished"),
+			},
 		},
 	}
 	message := Message{
