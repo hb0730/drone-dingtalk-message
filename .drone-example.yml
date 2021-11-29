@@ -17,7 +17,7 @@ steps:
   - name: notice
     image: hb0730/drone-plugin-notice:1.0.2
     settings:
-      notice_access_token:
+      notice_web_hok:
         from_secret: notice_webhok
       notice_secret:
         from_secret: notice_secret
