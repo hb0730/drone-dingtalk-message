@@ -8,7 +8,7 @@
   image: hb0730/drone-plugin-notice:1.0.2
   settings:
     debug: true
-    notice_access_token:
+    notice_web_hok:
       from_secret: feishu-robot-webhok
     notice_secret:
       from_secret: feishu-robot-secret
