@@ -7,8 +7,8 @@ import (
 func TestPlugin_Exec(t *testing.T) {
 	plugin := &Plugin{
 		NoticeConfig: NoticeConfig{
-			AccessToken: "",
-			Secret:      "",
+			WebHok: "",
+			Secret: "",
 		},
 	}
 	message := Message{

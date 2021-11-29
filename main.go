@@ -31,9 +31,9 @@ func main() {
 			EnvVar: "PLUGIN_DEBUG",
 		},
 		cli.StringFlag{
-			Name:   "config.notice.access_token",
-			Usage:  "DingTalk webhok access token/FeiShu webhok",
-			EnvVar: "PLUGIN_NOTICE_ACCESS_TOKEN,PLUGIN_ACCESS_TOKEN",
+			Name:   "config.notice.webhok",
+			Usage:  "token/FeiShu webhok",
+			EnvVar: "PLUGIN_NOTICE_WEB_HOK",
 		},
 		cli.StringFlag{
 			Name:   "config.notice.secret",
@@ -94,9 +94,9 @@ func run(ctx *cli.Context) error {
 	plugin := &Plugin{
 		Debug: ctx.Bool("config.debug"),
 		NoticeConfig: NoticeConfig{
-			NoticeType:  ctx.String("config.notice.type"),
-			AccessToken: ctx.String("config.notice.access_token"),
-			Secret:      ctx.String("config.notice.secret"),
+			NoticeType: ctx.String("config.notice.type"),
+			WebHok:     ctx.String("config.notice.webhok"),
+			Secret:     ctx.String("config.notice.secret"),
 		},
 		Custom: Custom{
 			Consuming: Consuming{

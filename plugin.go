@@ -16,9 +16,9 @@ type Plugin struct {
 	Custom       Custom
 }
 type NoticeConfig struct {
-	NoticeType  string
-	AccessToken string
-	Secret      string
+	NoticeType string
+	WebHok     string
+	Secret     string
 }
 type Custom struct {
 	Consuming Consuming
@@ -45,13 +45,13 @@ func (plugin *Plugin) Exec(message Message) error {
 			log.Println(e)
 		}
 	}
-	if plugin.NoticeConfig.AccessToken == "" {
-		return errors.New("missing  access token")
+	if plugin.NoticeConfig.WebHok == "" {
+		return errors.New("missing  webhok")
 	}
 	if message.Content == "" {
 		return errors.New("missing Content")
 	}
-	notice, err := getSupportMessage(plugin.NoticeConfig.NoticeType, plugin.NoticeConfig.AccessToken, plugin.NoticeConfig.Secret)
+	notice, err := getSupportMessage(plugin.NoticeConfig.NoticeType, plugin.NoticeConfig.WebHok, plugin.NoticeConfig.Secret)
 	if err != nil {
 		return err
 	}
