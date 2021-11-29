@@ -15,7 +15,7 @@ steps:
       - go get -v -t -d ./...
       - go build
   - name: notice
-    image: hb0730/drone-plugin-notice:1.0.1
+    image: hb0730/drone-plugin-notice:1.0.2
     settings:
       notice_access_token:
         from_secret: notice_webhok
@@ -32,4 +32,5 @@ steps:
         > - 应用名称: [DRONE_REPO_NAME]
         > - 构建发起: [CI_COMMIT_AUTHOR_NAME]
         > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
+
         构建日志: [点击查看详情]([DRONE_BUILD_LINK])

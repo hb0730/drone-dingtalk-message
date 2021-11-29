@@ -5,7 +5,7 @@
 ```yaml
 - name: Dingtalk Notice Failure
   pull: if-not-exists
-  image: hb0730/drone-plugin-notice:0.0.3-beta
+  image: hb0730/drone-plugin-notice:1.0.2
   settings:
     debug: true
     notice_access_token:
@@ -30,7 +30,7 @@
 
 ## 插件参数 plugin params
 
-* `notice_access_token` (required) : 自定义机器人的 `webhok`或者`access token`
+* `notice_access_token` (required) : 自定义机器人的 `webhok`
 * `notice_type` (required) : 机器人类型: `dingtalk`,`feishu`
 * `message_type` (required) : 消息类型: `text`,`markdown`
 * `notice_secret` : 如果设置了`加签` , 可以把你的加签密钥填入此项完成加签操作。
