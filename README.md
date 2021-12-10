@@ -14,6 +14,7 @@
       from_secret: feishu-robot-secret
     notice_type: feishu
     message_type: markdown
+    message_o_f_at: true
     message_at_all: true
     message_title: Drone 构建通知
     message_content: |
@@ -25,7 +26,9 @@
 
       构建日志: [点击查看详情]([DRONE_BUILD_LINK])        
   when:
-    status: success
+    status: 
+      - success
+      - failure
 ```
 
 ## 插件参数 plugin params

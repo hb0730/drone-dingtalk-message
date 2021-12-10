@@ -15,7 +15,7 @@ steps:
       - go get -v -t -d ./...
       - go build
   - name: notice
-    image: hb0730/drone-plugin-notice:1.0.2
+    image: hb0730/drone-plugin-notice:1.0.3
     settings:
       notice_web_hok:
         from_secret: notice_webhok
@@ -24,6 +24,7 @@ steps:
       notice_type: dingtalk
       message_type: markdown
       message_title: drone-plugin-notice 测试
+      message_o_f_at: true
       debug: true
       custom_started: DRONE_STAGE_STARTED
       custom_finished: DRONE_STAGE_FINISHED
@@ -34,3 +35,7 @@ steps:
         > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
 
         构建日志: [点击查看详情]([DRONE_BUILD_LINK])
+    when:
+      status:
+        - success
+        - failure
