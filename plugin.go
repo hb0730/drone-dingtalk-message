@@ -10,8 +10,17 @@ import (
 	"strings"
 )
 
+const (
+	success string = "success"
+	failure string = "failure"
+)
+
+type Build struct {
+	Status string
+}
 type Plugin struct {
 	Debug        bool
+	Build        Build
 	NoticeConfig NoticeConfig
 	Custom       Custom
 }
@@ -31,14 +40,16 @@ type Consuming struct {
 }
 
 type Message struct {
-	AtAll       bool
-	AtMobiles   []string
-	Title       string
-	Content     string
-	MessageType string
+	OnlyFailureAt bool
+	AtAll         bool
+	AtMobiles     []string
+	Title         string
+	Content       string
+	MessageType   string
 }
 
 func (plugin *Plugin) Exec(message Message) error {
+	log.Println("start  message ...")
 	var err error
 	if plugin.Debug {
 		for _, e := range os.Environ() {
@@ -61,11 +72,18 @@ func (plugin *Plugin) Exec(message Message) error {
 	}
 	switch strings.ToLower(message.MessageType) {
 	case "markdown":
-		err = notice.SendMarkdown(message.Title, content, message.AtAll, message.AtMobiles)
+		if message.OnlyFailureAt && plugin.Build.Status == "failure" {
+			err = notice.SendMarkdown(message.Title, content, true, message.AtMobiles)
+		} else {
+			err = notice.SendMarkdown(message.Title, content, message.AtAll, message.AtMobiles)
+		}
 	case "text":
-		err = notice.SendText(content, message.AtAll, message.AtMobiles)
+		if message.OnlyFailureAt && plugin.Build.Status == "failure" {
+			err = notice.SendMarkdown(message.Title, content, true, message.AtMobiles)
+		} else {
+			err = notice.SendText(content, message.AtAll, message.AtMobiles)
+		}
 	default:
-
 		msg := "not support message type"
 		err = errors.New(msg)
 	}

@@ -34,6 +34,7 @@
 * `notice_type` (required) : 机器人类型: `dingtalk`,`feishu`
 * `message_type` (required) : 消息类型: `text`,`markdown`
 * `notice_secret` : 如果设置了`加签` , 可以把你的加签密钥填入此项完成加签操作。
+* `message_O_F_AT` : 只有是否是 `AT`所有人
 * `message_at_all` : 是否`At`所有人
 * `message_at_mobiles` : 你需要@的群成员的手机号，多个时用英文逗号(`,`)分隔 , 目前只支持 `dingtalk`
 * `message_title` : 标题,只支持`markdown`

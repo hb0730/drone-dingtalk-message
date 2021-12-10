@@ -42,7 +42,7 @@ func (message *DingTalkMessage) SendText(content string, isAll bool, mobiles []s
 	_, err := message.client.Send(text)
 	return err
 }
-func (message DingTalkMessage) SendMarkdown(title string, content string, isAll bool, mobiles []string) error {
+func (message *DingTalkMessage) SendMarkdown(title string, content string, isAll bool, mobiles []string) error {
 	markdown := robot.NewMarkdownMessage().SetTitle(title).SetText(content)
 	markdown.SetAtMobiles(mobiles).SetIsAtAll(isAll)
 	_, err := message.client.Send(markdown)

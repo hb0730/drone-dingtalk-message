@@ -60,6 +60,11 @@ func main() {
 			Usage:  "at someone in a DingTalk group need this guy bind's mobile(FeiShu unsupported)",
 			EnvVar: "PLUGIN_MESSAGE_AT_MOBILES",
 		},
+		cli.BoolFlag{
+			Name:   "config.message.only_failure_at",
+			Usage:  "at all only in failure ",
+			EnvVar: "PLUGIN_MESSAGE_O_F_AT",
+		},
 		cli.StringFlag{
 			Name:   "config.message.title",
 			Usage:  "message title(markdown supported)",
@@ -80,6 +85,13 @@ func main() {
 			Usage:  "finished custom env name, eg., BUILD_FINISHED",
 			EnvVar: "PLUGIN_CUSTOM_FINISHED",
 		},
+
+		cli.StringFlag{
+			Name:   "build.status",
+			Usage:  "build status",
+			Value:  "success",
+			EnvVar: "DRONE_BUILD_STATUS",
+		},
 	}
 	if _, err := os.Stat("/run/drone/env"); err == nil {
 		godotenv.Overload("/run/drone/env")
@@ -93,6 +105,9 @@ func main() {
 func run(ctx *cli.Context) error {
 	plugin := &Plugin{
 		Debug: ctx.Bool("config.debug"),
+		Build: Build{
+			Status: ctx.String("build.status"),
+		},
 		NoticeConfig: NoticeConfig{
 			NoticeType: ctx.String("config.notice.type"),
 			WebHok:     ctx.String("config.notice.webhok"),
@@ -106,11 +121,12 @@ func run(ctx *cli.Context) error {
 		},
 	}
 	message := Message{
-		AtAll:       ctx.Bool("config.message.at_all"),
-		AtMobiles:   strings.Split(ctx.String("config.message.at.mobiles"), ","),
-		MessageType: ctx.String("config.message.type"),
-		Title:       ctx.String("config.message.title"),
-		Content:     ctx.String("config.message.content"),
+		OnlyFailureAt: ctx.Bool("config.message.only_failure_at"),
+		AtAll:         ctx.Bool("config.message.at_all"),
+		AtMobiles:     strings.Split(ctx.String("config.message.at.mobiles"), ","),
+		MessageType:   ctx.String("config.message.type"),
+		Title:         ctx.String("config.message.title"),
+		Content:       ctx.String("config.message.content"),
 	}
 	return plugin.Exec(message)
 }
