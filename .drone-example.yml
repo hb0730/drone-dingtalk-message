@@ -15,7 +15,7 @@ steps:
       - go get -v -t -d ./...
       - go build
   - name: notice
-    image: hb0730/drone-plugin-notice:1.0.2
+    image: hb0730/drone-plugin-notice:1.0.3-beta
     settings:
       notice_web_hok:
         from_secret: notice_webhok
