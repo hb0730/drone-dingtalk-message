@@ -24,6 +24,7 @@ steps:
       notice_type: dingtalk
       message_type: markdown
       message_title: drone-plugin-notice 测试
+      MESSAGE_O_F_AT: true
       debug: true
       custom_started: DRONE_STAGE_STARTED
       custom_finished: DRONE_STAGE_FINISHED
