@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/joho/godotenv"
 	"github.com/urfave/cli"
 	"log"
@@ -12,7 +11,6 @@ import (
 var version = "unknown"
 
 func main() {
-	panic(fmt.Errorf("test "))
 	app := cli.NewApp()
 	app.Name = "drone-plugin-notice"
 	app.Usage = "Sending message to DingTalk/FeiShu group by robot using WebHook"
