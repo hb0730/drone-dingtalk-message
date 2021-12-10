@@ -34,3 +34,8 @@ steps:
         > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
 
         构建日志: [点击查看详情]([DRONE_BUILD_LINK])
+      when:
+        status:
+          - success
+          - failure
+
