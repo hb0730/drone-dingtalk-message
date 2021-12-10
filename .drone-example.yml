@@ -10,7 +10,7 @@ steps:
   - name: branch
     image: plugins/git
     commands:
-      - git checkout -b test/1.0.3
+      - git checkout test/1.0.3
   - name: build
     image: golang:1.16
     environment:
