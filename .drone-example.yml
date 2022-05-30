@@ -21,7 +21,7 @@ steps:
         from_secret: notice_webhok
       secret:
         from_secret: notice_secret
-      message_type: dingtalk
+      robot_type: dingtalk
       content_type: markdown
       message_title: drone-plugin-notice 测试
       at_only_failure: true
