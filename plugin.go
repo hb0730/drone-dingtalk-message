@@ -20,9 +20,9 @@ type Plugin struct {
 	Custom       Custom
 }
 type NoticeConfig struct {
-	NoticeType string
-	WebHok     string
-	Secret     string
+	RobotType string
+	WebHok    string
+	Secret    string
 }
 type Custom struct {
 	Consuming Consuming
@@ -57,7 +57,7 @@ func (plugin *Plugin) Exec(message Message) error {
 	if message.Content == "" {
 		return errors.New("missing content")
 	}
-	notice, err := getSupportMessage(plugin.NoticeConfig.NoticeType, plugin.NoticeConfig.WebHok, plugin.NoticeConfig.Secret)
+	notice, err := getSupportMessage(plugin.NoticeConfig.RobotType, plugin.NoticeConfig.WebHok, plugin.NoticeConfig.Secret)
 	if err != nil {
 		return err
 	}

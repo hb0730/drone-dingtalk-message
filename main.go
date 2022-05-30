@@ -110,9 +110,9 @@ func run(ctx *cli.Context) error {
 			Status: ctx.String("build.status"),
 		},
 		NoticeConfig: NoticeConfig{
-			NoticeType: ctx.String("config.notice.type"),
-			WebHok:     ctx.String("config.notice.webhook"),
-			Secret:     ctx.String("config.notice.secret"),
+			RobotType: ctx.String("config.notice.robotType"),
+			WebHok:    ctx.String("config.notice.webhook"),
+			Secret:    ctx.String("config.notice.secret"),
 		},
 		Custom: Custom{
 			Consuming: Consuming{
