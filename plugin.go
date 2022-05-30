@@ -69,7 +69,7 @@ func (plugin *Plugin) Exec(message Message) error {
 }
 
 func (plugin *Plugin) send(message Message, content string, notice IMessage) error {
-	//var resMessage string
+	var resMessage string
 	var err error
 	switch strings.ToLower(message.MessageType) {
 	case "markdown":
