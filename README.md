@@ -46,3 +46,8 @@
 ---
 
 * `CUSTOM_BUILD_CONSUMING` : 构建时间(秒)
+
+
+# Screen Shot
+![](https://raw.githubusercontent.com/hb0730/drone-plugin-notice/main/docs/success.png)
+![](https://raw.githubusercontent.com/hb0730/drone-plugin-notice/main/docs/failure.png)
