@@ -10,11 +10,6 @@ import (
 	"strings"
 )
 
-const (
-	success string = "success"
-	failure string = "failure"
-)
-
 type Build struct {
 	Status string
 }
@@ -57,10 +52,10 @@ func (plugin *Plugin) Exec(message Message) error {
 		}
 	}
 	if plugin.NoticeConfig.WebHok == "" {
-		return errors.New("missing  webhok")
+		return errors.New("missing  webhook url")
 	}
 	if message.Content == "" {
-		return errors.New("missing Content")
+		return errors.New("missing content")
 	}
 	notice, err := getSupportMessage(plugin.NoticeConfig.NoticeType, plugin.NoticeConfig.WebHok, plugin.NoticeConfig.Secret)
 	if err != nil {
@@ -68,29 +63,39 @@ func (plugin *Plugin) Exec(message Message) error {
 	}
 	content := plugin.regexp(message.Content)
 	if plugin.Debug {
-		log.Printf("regexp content:" + content)
+		log.Printf("content: %s \r\n", content)
 	}
+	return plugin.send(message, content, notice)
+}
+
+func (plugin *Plugin) send(message Message, content string, notice IMessage) error {
+	var resMessage string
+	var err error
 	switch strings.ToLower(message.MessageType) {
 	case "markdown":
 		if message.OnlyFailureAt && plugin.Build.Status == "failure" {
-			err = notice.SendMarkdown(message.Title, content, true, message.AtMobiles)
+			resMessage, err = notice.SendMarkdown(message.Title, content, true, message.AtMobiles)
 		} else {
-			err = notice.SendMarkdown(message.Title, content, message.AtAll, message.AtMobiles)
+			resMessage, err = notice.SendMarkdown(message.Title, content, message.AtAll, message.AtMobiles)
 		}
 	case "text":
 		if message.OnlyFailureAt && plugin.Build.Status == "failure" {
-			err = notice.SendMarkdown(message.Title, content, true, message.AtMobiles)
+			resMessage, err = notice.SendText(content, true, message.AtMobiles)
 		} else {
-			err = notice.SendText(content, message.AtAll, message.AtMobiles)
+			resMessage, err = notice.SendText(content, message.AtAll, message.AtMobiles)
 		}
 	default:
 		msg := "not support message type"
 		err = errors.New(msg)
 	}
 	if err == nil {
+		if plugin.Debug {
+			log.Printf("response content: %s \r\n", resMessage)
+		}
 		log.Println("send message success!")
 	}
 	return err
+
 }
 
 func (plugin *Plugin) regexp(content string) string {

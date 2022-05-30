@@ -9,7 +9,7 @@ func TestDingTalkMessage_SendText(t *testing.T) {
 	accessToken := os.Getenv("dingtalk_accessToken")
 	secret := os.Getenv("dingtalk_secret")
 	message := NewDingTalkMessage(accessToken, secret)
-	err := message.SendText("test", true, nil)
+	_, err := message.SendText("test", true, nil)
 	if err != nil {
 		t.Logf("%s", err.Error())
 	}
@@ -18,7 +18,7 @@ func TestDingTalkMessage_SendMarkdown(t *testing.T) {
 	accessToken := os.Getenv("dingtalk_accessToken")
 	secret := os.Getenv("dingtalk_secret")
 	message := NewDingTalkMessage(accessToken, secret)
-	err := message.SendMarkdown("test", `
+	_, err := message.SendMarkdown("test", `
 ### test
 
 > - test
@@ -34,7 +34,7 @@ func TestFeiShuMessage_SendText(t *testing.T) {
 	secret := os.Getenv("feishu_secret")
 
 	message := NewFeiShuMessage(webhok, secret)
-	err := message.SendText("test", true, nil)
+	_, err := message.SendText("test", true, nil)
 	if err != nil {
 		t.Logf("%s", err.Error())
 	}
@@ -44,7 +44,7 @@ func TestFeiShuMessage_SendMarkdown(t *testing.T) {
 	webhok := os.Getenv("feishu_webhok")
 	secret := os.Getenv("feishu_secret")
 	message := NewFeiShuMessage(webhok, secret)
-	err := message.SendMarkdown("测试", `
+	_, err := message.SendMarkdown("测试", `
 ### test
 
 > - test

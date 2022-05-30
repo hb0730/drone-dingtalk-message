@@ -8,14 +8,13 @@
   image: hb0730/drone-plugin-notice:1.0.2
   settings:
     debug: true
-    notice_web_hok:
+    webhook:
       from_secret: feishu-robot-webhok
-    notice_secret:
+    secret:
       from_secret: feishu-robot-secret
-    notice_type: feishu
-    message_type: markdown
-    message_o_f_at: true
-    message_at_all: true
+    robot_type: feishu
+    content_type: markdown
+    at_only_failure: true
     message_title: Drone 构建通知
     message_content: |
       ### 构建信息
@@ -32,17 +31,15 @@
 ```
 
 ## 插件参数 plugin params
-
-* `notice_access_token` (required) : 自定义机器人的 `webhok`
-* `notice_type` (required) : 机器人类型: `dingtalk`,`feishu`
-* `message_type` (required) : 消息类型: `text`,`markdown`
-* `notice_secret` : 如果设置了`加签` , 可以把你的加签密钥填入此项完成加签操作。
-* `message_O_F_AT` : 只有失败是否 `AT`所有人
-* `message_at_all` : 是否`At`所有人
-* `message_at_mobiles` : 你需要@的群成员的手机号，多个时用英文逗号(`,`)分隔 , 目前只支持 `dingtalk`
-* `message_title` : 标题,只支持`markdown`
-* `message_content` : 内容,支持占位符`[]` 替换，支持当前所有环境变量
 * `debug` : debug模式，打印`env`等信息
+* `webhook`: 机器人的`webhook`地址
+* `secret`: 机器人的`secret`
+* `robot_type`: 机器人类型: `feishu`,`dingtalk` (忽略大小写)
+* `content_type`: 内容的形式: `markdown`,`text` (忽略大小写)
+* `at_all`: 是否`AT`所有人
+* `at_only_failure`: 是否只在`failure`时`at`所有人,
+* `message_title`: 标题,(目前只支持`mardkown`模式)
+* `message_content` : 内容,支持占位符`[]` 替换，支持当前所有环境变量
 * `custom_started` 开始时间环境变量,如:`DRONE_BUILD_STARTED`
 * `custom_finished` 完成时间环境变量,如:`DRONE_BUILD_FINISHED`
 

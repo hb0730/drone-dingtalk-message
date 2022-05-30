@@ -8,18 +8,18 @@ import (
 )
 
 type IMessage interface {
-	SendText(content string, isAll bool, mobiles []string) error
-	SendMarkdown(title string, content string, isAll bool, mobiles []string) error
+	SendText(content string, isAll bool, mobiles []string) (string, error)
+	SendMarkdown(title string, content string, isAll bool, mobiles []string) (string, error)
 }
 
-func getSupportMessage(typeStr, webhok, secret string) (IMessage, error) {
+func getSupportMessage(typeStr, webhook, secret string) (IMessage, error) {
 	switch strings.ToLower(typeStr) {
 	case "dingtalk":
-		return NewDingTalkMessage(webhok, secret), nil
+		return NewDingTalkMessage(webhook, secret), nil
 	case "feishu":
-		return NewFeiShuMessage(webhok, secret), nil
+		return NewFeiShuMessage(webhook, secret), nil
 	default:
-		return nil, errors.New("missing message")
+		return nil, errors.New("unsupported webhook type")
 	}
 }
 
@@ -28,43 +28,53 @@ type DingTalkMessage struct {
 }
 
 // NewDingTalkMessage new DingTalkMessage
-func NewDingTalkMessage(webhok string, secret string) *DingTalkMessage {
-	client := robot.NewClient(webhok, secret)
+func NewDingTalkMessage(webhook string, secret string) *DingTalkMessage {
+	client := robot.NewClient(webhook, secret)
 	return &DingTalkMessage{
 		client: client,
 	}
 }
 
 // SendText send text
-func (message *DingTalkMessage) SendText(content string, isAll bool, mobiles []string) error {
+func (message *DingTalkMessage) SendText(content string, isAll bool, mobiles []string) (string, error) {
 	text := robot.NewTextMessage().SetContent(content)
 	text.SetIsAtAll(isAll).SetAtMobiles(mobiles)
-	_, err := message.client.Send(text)
-	return err
+	response, err := message.client.Send(text)
+	if err != nil {
+		return "", err
+	}
+	return response.ErrMsg, nil
 }
-func (message *DingTalkMessage) SendMarkdown(title string, content string, isAll bool, mobiles []string) error {
+func (message *DingTalkMessage) SendMarkdown(title string, content string, isAll bool, mobiles []string) (string, error) {
 	markdown := robot.NewMarkdownMessage().SetTitle(title).SetText(content)
 	markdown.SetAtMobiles(mobiles).SetIsAtAll(isAll)
-	_, err := message.client.Send(markdown)
-	return err
+	response, err := message.client.Send(markdown)
+	if err != nil {
+		return "", err
+	}
+	return response.ErrMsg, nil
 }
 
 type FeiShuMessage struct {
 	client *feishu.Client
 }
 
-func NewFeiShuMessage(webhok, secret string) *FeiShuMessage {
+func NewFeiShuMessage(webhook, secret string) *FeiShuMessage {
 	return &FeiShuMessage{
-		client: feishu.NewClient(webhok, secret),
+		client: feishu.NewClient(webhook, secret),
 	}
 }
 
-func (message *FeiShuMessage) SendText(content string, isAll bool, _ []string) error {
+func (message *FeiShuMessage) SendText(content string, isAll bool, _ []string) (string, error) {
 	textMessage := feishu.NewTextMessage().SetContent(content).SetAtAll(isAll)
-	_, err := message.client.Send(textMessage)
-	return err
+	response, err := message.client.Send(textMessage)
+	//return err
+	if err != nil {
+		return "", err
+	}
+	return response.Msg, nil
 }
-func (message *FeiShuMessage) SendMarkdown(title string, content string, isAll bool, _ []string) error {
+func (message *FeiShuMessage) SendMarkdown(title string, content string, isAll bool, _ []string) (string, error) {
 	mdContent := content
 	if isAll {
 		mdContent = mdContent + "\n<at id=all></at>"
@@ -73,6 +83,9 @@ func (message *FeiShuMessage) SendMarkdown(title string, content string, isAll b
 	interactiveMessage = interactiveMessage.SetHeader(feishu.NewCardHeader().SetTitle(feishu.NewCardTitle().SetContent(title)))
 	interactiveMessage.SetConfig(feishu.NewCardConfig().SetEnableForward(true))
 	interactiveMessage.SetElements(feishu.NewElementsContent().AddElement(feishu.NewMarkdownCardContent().SetContent(mdContent)))
-	_, err := message.client.Send(interactiveMessage)
-	return err
+	response, err := message.client.Send(interactiveMessage)
+	if err != nil {
+		return "", err
+	}
+	return response.Msg, nil
 }
