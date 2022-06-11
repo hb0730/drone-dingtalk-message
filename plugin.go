@@ -151,5 +151,11 @@ func (plugin *Plugin) getEnvs() map[string]string {
 		consuming = 0
 	}
 	envs["CUSTOM_BUILD_CONSUMING"] = fmt.Sprintf("%v", consuming)
+	var buildStatus = plugin.Build.Status
+	if buildStatus == "success" {
+		envs["CUSTOM_BUILD_STATUS"] = "SUCCESS  ✅"
+	} else {
+		envs["CUSTOM_BUILD_STATUS"] = "FAILURE ❌"
+	}
 	return envs
 }

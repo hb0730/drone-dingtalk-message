@@ -44,9 +44,10 @@
 * `custom_finished` 完成时间环境变量,如:`DRONE_BUILD_FINISHED`
 
 ---
+## 占位符
 
 * `CUSTOM_BUILD_CONSUMING` : 构建时间(秒)
-
+* `CUSTOM_BUILD_STATUS`: 构建状态: `SUCCESS  ✅`,`FAILURE ❌`
 
 # Screen Shot
 ![](https://raw.githubusercontent.com/hb0730/drone-plugin-notice/main/docs/success.png)
