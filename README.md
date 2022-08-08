@@ -19,7 +19,7 @@
     message_content: |
       ### 构建信息
       > - 应用名称: [DRONE_REPO_NAME]
-      > - 构建结果: 预发布成功 ✅
+      > - 构建结果: [CUSTOM_BUILD_STATUS]
       > - 构建发起: [CI_COMMIT_AUTHOR_NAME]
       > - 持续时间: [CUSTOM_BUILD_CONSUMING]s
 
