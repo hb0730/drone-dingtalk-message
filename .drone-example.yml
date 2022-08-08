@@ -8,14 +8,14 @@ trigger:
     - main
 steps:
   - name: build
-    image: golang:1.16
+    image: golang:1.18
     environment:
       GO111MODULE: "on"
     commands:
       - go get -v -t -d ./...
       - go build
   - name: notice
-    image: hb0730/drone-plugin-notice:1.0.4
+    image: hb0730/drone-plugin-notice:1.0.6-beta
     settings:
       webhook:
         from_secret: notice_webhok
