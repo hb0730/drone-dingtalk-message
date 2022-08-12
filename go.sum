@@ -2,8 +2,8 @@ github.com/cpuguy83/go-md2man/v2 v2.0.2 h1:p1EgwI/C7NhT0JmVkwCD2ZBK8j4aeHQX2pMHH
 github.com/cpuguy83/go-md2man/v2 v2.0.2/go.mod h1:tgQtvFlXSQOSOSIRvRPT7W67SCa46tRHOmNcaadrF8o=
 github.com/go-resty/resty/v2 v2.7.0 h1:me+K9p3uhSmXtrBZ4k9jcEAfJmuC8IivWHwaLZwPrFY=
 github.com/go-resty/resty/v2 v2.7.0/go.mod h1:9PWDzw47qPphMRFfhsyk0NnSgvluHcljSMVIq3w7q0I=
-github.com/hb0730/dingtalk-robot v1.0.0 h1:dMfXjspY7qeDW3U6N2g5+zEmwad+swpU2dIJUbJZR2k=
-github.com/hb0730/dingtalk-robot v1.0.0/go.mod h1:IAyBeStrThwRqd7H5K9Q1YsRNvhbS1LF2a9/H4Blg9k=
+github.com/group-robot/dingtalk-robot/v2 v2.0.0 h1:lb19a09pIwnJcBjsDILxNqS/jR7EbtxhdmZFDmDG2L8=
+github.com/group-robot/dingtalk-robot/v2 v2.0.0/go.mod h1:osfimvXqWbJ+3FSP3kVmpWxjVxg5dZmw6bqJfnUY+tE=
 github.com/hb0730/feishu-robot v1.0.0 h1:Iq608WVUiS6r0cXZyeW94goXao5yn5AM1ZA/PN4V0Yg=
 github.com/hb0730/feishu-robot v1.0.0/go.mod h1:EN74cd0I9WrHqMwR4vT0aDeEUd1agq/Bf9Xryt4Md7s=
 github.com/joho/godotenv v1.4.0 h1:3l4+N6zfMWnkbPEXKng2o2/MR5mSwTrBih4ZEkkz1lg=

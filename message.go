@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	robot "github.com/hb0730/dingtalk-robot"
+	dingtalkRobot "github.com/group-robot/dingtalk-robot/v2"
 	"github.com/hb0730/feishu-robot"
 	"strings"
 )
@@ -24,12 +24,14 @@ func getSupportMessage(typeStr, webhook, secret string) (IMessage, error) {
 }
 
 type DingTalkMessage struct {
-	client *robot.Client
+	client *dingtalkRobot.Client
 }
 
 // NewDingTalkMessage new DingTalkMessage
 func NewDingTalkMessage(webhook string, secret string) *DingTalkMessage {
-	client := robot.NewClient(webhook, secret)
+	client := dingtalkRobot.NewClient()
+	client.Webhook = webhook
+	client.Secret = secret
 	return &DingTalkMessage{
 		client: client,
 	}
@@ -37,22 +39,22 @@ func NewDingTalkMessage(webhook string, secret string) *DingTalkMessage {
 
 // SendText send text
 func (message *DingTalkMessage) SendText(content string, isAll bool, mobiles []string) (string, error) {
-	text := robot.NewTextMessage().SetContent(content)
-	text.SetIsAtAll(isAll).SetAtMobiles(mobiles)
-	response, err := message.client.Send(text)
+	textMsg := dingtalkRobot.NewTextMessage(content)
+	textMsg.At = dingtalkRobot.NewAt(isAll).SetAtMobiles(mobiles...)
+	response, err := message.client.SendMessage(textMsg)
 	if err != nil {
 		return "", err
 	}
-	return response.ErrMsg, nil
+	return response.ErrorMessage, nil
 }
 func (message *DingTalkMessage) SendMarkdown(title string, content string, isAll bool, mobiles []string) (string, error) {
-	markdown := robot.NewMarkdownMessage().SetTitle(title).SetText(content)
-	markdown.SetAtMobiles(mobiles).SetIsAtAll(isAll)
-	response, err := message.client.Send(markdown)
+	markdownMsg := dingtalkRobot.NewMarkdownMessage(title, content)
+	markdownMsg.At = dingtalkRobot.NewAt(isAll).SetAtMobiles(mobiles...)
+	response, err := message.client.SendMessage(markdownMsg)
 	if err != nil {
 		return "", err
 	}
-	return response.ErrMsg, nil
+	return response.ErrorMessage, nil
 }
 
 type FeiShuMessage struct {
