@@ -4,8 +4,8 @@ github.com/go-resty/resty/v2 v2.7.0 h1:me+K9p3uhSmXtrBZ4k9jcEAfJmuC8IivWHwaLZwPr
 github.com/go-resty/resty/v2 v2.7.0/go.mod h1:9PWDzw47qPphMRFfhsyk0NnSgvluHcljSMVIq3w7q0I=
 github.com/group-robot/dingtalk-robot/v2 v2.0.0 h1:lb19a09pIwnJcBjsDILxNqS/jR7EbtxhdmZFDmDG2L8=
 github.com/group-robot/dingtalk-robot/v2 v2.0.0/go.mod h1:osfimvXqWbJ+3FSP3kVmpWxjVxg5dZmw6bqJfnUY+tE=
-github.com/hb0730/feishu-robot v1.0.0 h1:Iq608WVUiS6r0cXZyeW94goXao5yn5AM1ZA/PN4V0Yg=
-github.com/hb0730/feishu-robot v1.0.0/go.mod h1:EN74cd0I9WrHqMwR4vT0aDeEUd1agq/Bf9Xryt4Md7s=
+github.com/group-robot/feishu-robot/v2 v2.0.0 h1:JSfe5+Lc0twn4thX5UCwDWydTlH3sKTl3rJL8WZxWPs=
+github.com/group-robot/feishu-robot/v2 v2.0.0/go.mod h1:D19n2HQNltVJaienLG3+gnjGatkoPD0hQlKkrNvV46g=
 github.com/joho/godotenv v1.4.0 h1:3l4+N6zfMWnkbPEXKng2o2/MR5mSwTrBih4ZEkkz1lg=
 github.com/joho/godotenv v1.4.0/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/russross/blackfriday/v2 v2.1.0 h1:JIOH55/0cWyOuilr9/qlrm0BSXldqnqwMsf35Ld67mk=

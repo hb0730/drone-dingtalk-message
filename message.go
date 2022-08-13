@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	dingtalkRobot "github.com/group-robot/dingtalk-robot/v2"
-	"github.com/hb0730/feishu-robot"
+	feishuRobot "github.com/group-robot/feishu-robot/v2"
 	"strings"
 )
 
@@ -58,36 +58,42 @@ func (message *DingTalkMessage) SendMarkdown(title string, content string, isAll
 }
 
 type FeiShuMessage struct {
-	client *feishu.Client
+	client *feishuRobot.Client
 }
 
 func NewFeiShuMessage(webhook, secret string) *FeiShuMessage {
+	client := feishuRobot.NewClient()
+	client.Webhook = webhook
+	client.Secret = secret
 	return &FeiShuMessage{
-		client: feishu.NewClient(webhook, secret),
+		client: client,
 	}
 }
 
 func (message *FeiShuMessage) SendText(content string, isAll bool, _ []string) (string, error) {
-	textMessage := feishu.NewTextMessage().SetContent(content).SetAtAll(isAll)
-	response, err := message.client.Send(textMessage)
-	//return err
+	textMessage := feishuRobot.NewTextMessage(content, isAll)
+	rep, err := message.client.SendMessage(textMessage)
 	if err != nil {
 		return "", err
 	}
-	return response.Msg, nil
+	return rep.Msg, nil
 }
 func (message *FeiShuMessage) SendMarkdown(title string, content string, isAll bool, _ []string) (string, error) {
 	mdContent := content
 	if isAll {
 		mdContent = mdContent + "\n<at id=all></at>"
 	}
-	interactiveMessage := feishu.NewInteractiveMessage()
-	interactiveMessage = interactiveMessage.SetHeader(feishu.NewCardHeader().SetTitle(feishu.NewCardTitle().SetContent(title)))
-	interactiveMessage.SetConfig(feishu.NewCardConfig().SetEnableForward(true))
-	interactiveMessage.SetElements(feishu.NewElementsContent().AddElement(feishu.NewMarkdownCardContent().SetContent(mdContent)))
-	response, err := message.client.Send(interactiveMessage)
+	interactiveMessage := feishuRobot.NewInteractiveMessage()
+	interactiveMessage.SetHeader(
+		feishuRobot.NewCardHeader(feishuRobot.NewCardTitle(title, nil)),
+	).SetConfig(
+		feishuRobot.NewCardConfig().SetWideScreenMode(true),
+	).AddElements(
+		feishuRobot.NewCardMarkdown(mdContent),
+	)
+	rep, err := message.client.SendMessage(interactiveMessage)
 	if err != nil {
 		return "", err
 	}
-	return response.Msg, nil
+	return rep.Msg, nil
 }

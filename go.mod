@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/group-robot/dingtalk-robot/v2 v2.0.0
-	github.com/hb0730/feishu-robot v1.0.0
+	github.com/group-robot/feishu-robot/v2 v2.0.0
 	github.com/joho/godotenv v1.4.0
 	github.com/urfave/cli/v2 v2.11.1
 
